@@ -16,7 +16,7 @@ import com.bypriyan.todoapp.ui.theme.ToDoAppTheme
 
 class MainActivity : ComponentActivity() {
 
-    //d1397b36702642c693723257240807
+    //
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

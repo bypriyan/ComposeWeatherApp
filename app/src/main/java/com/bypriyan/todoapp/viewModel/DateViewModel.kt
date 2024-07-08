@@ -5,7 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bypriyan.todoapp.repositry.DateRepo
+import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
+import com.bypriyan.todoapp.repositry.CurrentWeatherRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,14 +14,18 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DateViewModel @Inject constructor(val dateRepo: DateRepo) :ViewModel() {
+class DateViewModel @Inject constructor(val currentWeatherRepo: CurrentWeatherRepo) :ViewModel() {
 
-    private val _months = MutableLiveData<List<Pair<String,String>>>()
-    val months: LiveData<List<Pair<String,String>>> = _months
+    private val _currentWeather = MutableLiveData<ModelCurrentWeatherResponce>()
+    val currentWeather: LiveData<ModelCurrentWeatherResponce> = _currentWeather
 
-    fun getMarketData() {
+    fun getWeatherData(city:String) {
         viewModelScope.launch {
-
+            withContext(Dispatchers.IO) {
+                currentWeatherRepo.getCurrentWeather(city).collect{modelCurrentWeatherResponce ->
+                    _currentWeather.postValue(modelCurrentWeatherResponce)
+                }
+            }
         }
     }
 
