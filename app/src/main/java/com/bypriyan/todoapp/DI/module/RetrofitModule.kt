@@ -17,7 +17,7 @@ object RetrofitModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://api.weatherapi.com/v1/")
+            .baseUrl("https://api.weatherapi.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

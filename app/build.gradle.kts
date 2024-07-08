@@ -32,17 +32,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -101,8 +101,8 @@ dependencies {
     //coil
     implementation("io.coil-kt:coil-compose:2.6.0")
     //dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
     //constraint layout
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
@@ -111,7 +111,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
 
 }
-
 kapt {
     correctErrorTypes = true
 }

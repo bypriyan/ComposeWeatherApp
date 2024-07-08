@@ -1,5 +1,6 @@
 package com.bypriyan.todoapp.repositry
 
+import android.util.Log
 import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
 import com.bypriyan.todoapp.utility.Constants
 import com.bypriyan.togocartstore.api.ApiService
@@ -15,11 +16,12 @@ class CurrentWeatherRepo @Inject constructor(val apiService: ApiService){
 
         if(responce.isSuccessful){
             emit(responce.body()!!)
+
         }else{
-            emit(ModelCurrentWeatherResponce(null, null))
+//            emit(ModelCurrentWeatherResponce(null, null))
         }
     }.catch {
-        emit(ModelCurrentWeatherResponce(null, null))
+//        emit(ModelCurrentWeatherResponce(null, null))
     }
 
 }

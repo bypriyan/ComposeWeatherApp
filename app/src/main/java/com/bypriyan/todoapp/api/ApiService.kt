@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("GetLiveMarkets2_DpKalyan.php")
+    @GET("/v1/current.json")
     suspend fun getCurrentWeather(
         @Query("key") apiKey: String,
         @Query("q") city:String
