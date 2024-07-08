@@ -2,6 +2,7 @@ package com.bypriyan.todoapp.repositry
 
 import android.util.Log
 import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
+import com.bypriyan.todoapp.networkResp.NetworkResponce
 import com.bypriyan.todoapp.utility.Constants
 import com.bypriyan.togocartstore.api.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -11,17 +12,16 @@ import javax.inject.Inject
 
 class CurrentWeatherRepo @Inject constructor(val apiService: ApiService){
 
-    suspend fun getCurrentWeather(city:String):Flow<ModelCurrentWeatherResponce> = flow {
+    suspend fun getCurrentWeather(city:String):Flow<NetworkResponce<ModelCurrentWeatherResponce>> = flow {
         val responce = apiService.getCurrentWeather(Constants.apiKey,city)
 
         if(responce.isSuccessful){
-            emit(responce.body()!!)
-
+            emit(NetworkResponce.Success(responce.body()!!))
         }else{
-//            emit(ModelCurrentWeatherResponce(null, null))
+            emit(NetworkResponce.Error(responce.errorBody().toString()))
         }
-    }.catch {
-//        emit(ModelCurrentWeatherResponce(null, null))
+    }.catch { e->
+        emit(NetworkResponce.Error(e.message.toString()))
     }
 
 }
