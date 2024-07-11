@@ -22,7 +22,6 @@
     <color name="red">#CB202D </color>
     <color name="orange">#FF5B00 </color>
     <color name="yellow">#FFC107</color>
-    <color name="skyBlue">#005cb9</color>
-    <color name="appColor">#3E2AA5</color>
+    <color name="appColor">#FFC107</color>
     <color name="liteBlue">#8370DC</color>
 </resources>

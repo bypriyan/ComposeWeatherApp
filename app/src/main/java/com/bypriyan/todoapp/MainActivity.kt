@@ -3,20 +3,13 @@ package com.bypriyan.todoapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.Observer
 import com.bypriyan.todoapp.composables.homeScreen
-import com.bypriyan.todoapp.ui.theme.ToDoAppTheme
 import com.bypriyan.todoapp.viewModel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,11 +18,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-            homeScreen()
-        }
-
         weatherViewModel.getWeatherData("Bhilai")
+
+        val dateFormat = SimpleDateFormat("HH", Locale.getDefault())
+        val currentTime = dateFormat.format(Date()).toInt()
+
+        setContent {
+            homeScreen(weatherViewModel, currentTime)
+        }
 
     }
 }

@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -100,15 +101,21 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.12.0")
     //coil
     implementation("io.coil-kt:coil-compose:2.6.0")
+    //retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    //play loc
+    implementation ("com.google.android.gms:play-services-location:21.2.0")
     //dagger hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     //constraint layout
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    //place api
+    implementation ("com.google.android.libraries.places:places:3.5.0")
 
-    //retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    //
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
 }
 kapt {

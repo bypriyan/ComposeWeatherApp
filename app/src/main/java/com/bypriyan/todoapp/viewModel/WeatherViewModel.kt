@@ -26,7 +26,6 @@ class WeatherViewModel @Inject constructor(val currentWeatherRepo: CurrentWeathe
             withContext(Dispatchers.IO) {
                 currentWeatherRepo.getCurrentWeather(city).collect{modelCurrentWeatherResponce ->
                     _currentWeatherstatus.postValue(modelCurrentWeatherResponce)
-
                 }
             }
         }
