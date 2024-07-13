@@ -33,12 +33,22 @@ class PlaceRepo @Inject constructor(
         emit(emptyList())
     }
 
-    suspend fun findPlaceLatLong(placeId:String):Flow<Place> = flow {
-        val placeFields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+    suspend fun findCityName(placeId: String): Flow<String> = flow {
+        val placeFields = listOf(Place.Field.ID, Place.Field.ADDRESS_COMPONENTS)
         val request = FetchPlaceRequest.builder(placeId, placeFields).build()
         val response = placesClient.fetchPlace(request).await()
-        Log.d("TAG", "findPlaceLatLong: place lat long is ${response}")
-        emit(response.place)
+        val addressComponents = response.place.addressComponents?.asList()
+
+        val cityName = addressComponents?.firstOrNull { component ->
+            component.types.contains("locality")
+        }?.name
+
+        if (cityName != null) {
+            Log.d("TAGed", "findCityName: city $cityName")
+            emit(cityName)
+        } else {
+            throw Exception("City name not found")
+        }
     }.catch { exception ->
         Log.e("TAG", "Some exception happened: ${exception.message}")
     }

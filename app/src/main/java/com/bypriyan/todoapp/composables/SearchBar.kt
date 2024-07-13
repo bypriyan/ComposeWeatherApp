@@ -47,12 +47,13 @@ import com.google.android.libraries.places.api.model.AutocompletePrediction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier, onClick: (String) -> Unit) {
+fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier) {
 
     var query by remember { mutableStateOf("") }
     var isActive by remember { mutableStateOf(false) }
 
     val predictions by placeViewModel.predictions.collectAsState()
+    val selectedPlace by placeViewModel.selectedPlace.collectAsState()
 
     SearchBar(query = query,
         onQueryChange = {
@@ -79,10 +80,12 @@ fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier, onClick: (Stri
         // Show PredictionsList below the search field if there are predictions
         if (predictions.isNotEmpty()) {
             PredictionsList(predictions, placeViewModel) {
-                Log.d("PredictionsList", "Prediction clicked: $it")
-                onClick(it)
+                Log.d("clicked", "searchBar: button clicked ")
+                isActive = false
+                query = it
             }
         }
+
     }
 }
 
@@ -106,9 +109,8 @@ fun searchedPlaces(prediction: AutocompletePrediction, viewModel: PlaceViewModel
     ConstraintLayout(
         modifier = Modifier
             .clickable {
-                onClick("Place clicked: ${prediction.getPrimaryText(null)}")
-                Log.d("clicked", "homeScreen: clicked img - $prediction")
-
+                viewModel.fetchPlaceDetails(prediction.placeId)
+                onClick(prediction.getPrimaryText(null).toString())
             }
             .fillMaxWidth()
             .padding(horizontal = 15.dp)

@@ -21,8 +21,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        weatherViewModel.getWeatherData("Bhilai")
-
         val dateFormat = SimpleDateFormat("HH", Locale.getDefault())
         val currentTime = dateFormat.format(Date()).toInt()
 

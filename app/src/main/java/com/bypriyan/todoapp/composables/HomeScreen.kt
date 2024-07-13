@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -27,6 +28,8 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
     ) {
 
         val currentWeatherStatus = weatherViewModel.currentWeatherStatus.observeAsState()
+        val selectedPlace by placeViewModel.selectedPlace.collectAsState()
+        Log.d("selected", "homeScreen: $selectedPlace")
 
         val backgroundImageResId = when {
             currentTime > 19 || currentTime in 0..5 -> R.drawable.night_bg
@@ -75,9 +78,8 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
             modifier = Modifier.fillMaxSize()
 
         ) {
-            searchBar(placeViewModel, modifier = Modifier.fillMaxWidth()) { s ->
-                Log.d("clicked", "homeScreen: clicked img - $s")
-            }
+            searchBar(placeViewModel, modifier = Modifier.fillMaxWidth())
+
 
 
         }

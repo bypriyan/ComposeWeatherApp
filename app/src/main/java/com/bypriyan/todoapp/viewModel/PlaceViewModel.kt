@@ -22,8 +22,8 @@ class PlaceViewModel @Inject constructor(private val placeRepo: PlaceRepo) : Vie
     private val _predictions = MutableStateFlow<List<AutocompletePrediction>>(emptyList())
     val predictions: StateFlow<List<AutocompletePrediction>> get() = _predictions
 
-    private val _selectedPlace = MutableStateFlow<Place?>(null)
-    val selectedPlace: StateFlow<Place?> get() = _selectedPlace
+    private val _selectedPlace = MutableStateFlow<String?>(null)
+    val selectedPlace: StateFlow<String?> get() = _selectedPlace
 
     fun getPlacePredictions(query: String) {
         viewModelScope.launch {
@@ -38,7 +38,7 @@ class PlaceViewModel @Inject constructor(private val placeRepo: PlaceRepo) : Vie
     fun fetchPlaceDetails(placeId: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                placeRepo.findPlaceLatLong(placeId).collect { place ->
+                placeRepo.findCityName(placeId).collect { place ->
                     Log.d("TAG", "findPlaceLatLong: place lat long is ${place}")
                     _selectedPlace.value = place
                 }
