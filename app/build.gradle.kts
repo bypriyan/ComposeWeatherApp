@@ -82,7 +82,7 @@ dependencies {
     implementation ("org.jetbrains:annotations:24.0.1")
     implementation ("androidx.multidex:multidex:2.0.1")
     //lottie anim
-    implementation ("com.airbnb.android:lottie:6.4.0")
+    implementation ("com.airbnb.android:lottie-compose:6.4.1")
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 

@@ -14,7 +14,7 @@ import com.bypriyan.todoapp.R
 fun progressBar(){
     CircularProgressIndicator(
         modifier = Modifier.size(34.dp), // Use size instead of width
-        color = colorResource(id = R.color.appColor),
+        color = colorResource(id = R.color.teal_200),
         trackColor = colorResource(id = R.color.transparent),
     )
 }

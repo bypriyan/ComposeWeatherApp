@@ -2,6 +2,7 @@ package com.bypriyan.todoapp.composables
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bypriyan.todoapp.R
@@ -29,7 +32,11 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
 
         val currentWeatherStatus = weatherViewModel.currentWeatherStatus.observeAsState()
         val selectedPlace by placeViewModel.selectedPlace.collectAsState()
-        Log.d("selected", "homeScreen: $selectedPlace")
+
+
+        selectedPlace?.let {
+            weatherViewModel.getWeatherData(it)
+        }
 
         val backgroundImageResId = when {
             currentTime > 19 || currentTime in 0..5 -> R.drawable.night_bg
@@ -38,23 +45,31 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
         }
 
         Box(modifier = Modifier
-            .fillMaxSize()){
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center)
+        {
 
-            Image(
-                painter = painterResource(
-                    id = backgroundImageResId
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .blur(
-                        radiusX = 40.dp,
-                        radiusY = 40.dp
-                    )
-            )
+            if(selectedPlace!=null){
+                Image(
+                    painter = painterResource(
+                        id = backgroundImageResId
+                    ),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .blur(
+                            radiusX = 40.dp,
+                            radiusY = 40.dp
+                        )
+                )
+            }else{
+                lottieAnimation(R.raw.weather_city)
+            }
 
-            when(currentWeatherStatus.value){
+
+
+            when(val result = currentWeatherStatus.value){
                 is NetworkResponce.Loading -> {
                     progressBar()
                 }
@@ -65,22 +80,19 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
                 }
 
                 is NetworkResponce.Success -> {
-
+                    Log.d("sss", "homeScreen: ok ${result.data} ")
                 }
                 else -> {
-                    progressBar()
                 }
 
             }
-        }
 
-        Column(
-            modifier = Modifier.fillMaxSize()
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                ) {
+                searchBar(placeViewModel, modifier = Modifier.fillMaxWidth())
 
-        ) {
-            searchBar(placeViewModel, modifier = Modifier.fillMaxWidth())
-
-
+            }
 
         }
     }

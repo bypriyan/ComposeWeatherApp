@@ -53,7 +53,6 @@ fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier) {
     var isActive by remember { mutableStateOf(false) }
 
     val predictions by placeViewModel.predictions.collectAsState()
-    val selectedPlace by placeViewModel.selectedPlace.collectAsState()
 
     SearchBar(query = query,
         onQueryChange = {
