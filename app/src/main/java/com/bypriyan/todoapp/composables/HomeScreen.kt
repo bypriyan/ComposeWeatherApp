@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -33,10 +36,17 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
         val currentWeatherStatus = weatherViewModel.currentWeatherStatus.observeAsState()
         val selectedPlace by placeViewModel.selectedPlace.collectAsState()
 
+        var placeName by remember { mutableStateOf("*") }
 
-        selectedPlace?.let {
-            weatherViewModel.getWeatherData(it)
+        selectedPlace?.let{ place ->
+            if(!placeName.equals(place)){
+                placeName = selectedPlace!!
+                weatherViewModel.getWeatherData(placeName)
+            }
         }
+
+
+
 
         val backgroundImageResId = when {
             currentTime > 19 || currentTime in 0..5 -> R.drawable.night_bg
