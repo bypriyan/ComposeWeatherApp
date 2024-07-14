@@ -102,6 +102,8 @@ fun weatherUiData(
         Spacer(modifier = Modifier.height(10.dp))
         forcasteWeatherDataSunMoon(resultData!!)
 
+        Spacer(modifier = Modifier.height(20.dp))
+
     }
 }
 

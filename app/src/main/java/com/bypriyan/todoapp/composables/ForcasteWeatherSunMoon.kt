@@ -42,12 +42,12 @@ fun forcasteWeatherDataSunMoon(data: ModelWeatherForcase) {
             horizontalArrangement = Arrangement.Center){
 
             element(
-                R.drawable.humidity,"Humidity", data.current.humidity, modifier = Modifier.weight(0.5f),
-                tint = R.color.white)
+                R.drawable.sunrise,"Sunrise", data.forecast.forecastday.get(0).astro.sunrise, modifier = Modifier.weight(0.5f),
+                tint = R.color.yellow)
 
             element(
-                R.drawable.uv,"UV index", data.current.uv, modifier = Modifier.weight(0.5f),
-                tint = R.color.yellow)
+                R.drawable.sunset,"Sunset", data.forecast.forecastday.get(0).astro.sunset, modifier = Modifier.weight(0.5f),
+                tint = R.color.orange)
 
         }
 
@@ -64,57 +64,14 @@ fun forcasteWeatherDataSunMoon(data: ModelWeatherForcase) {
             horizontalArrangement = Arrangement.Center){
 
             element(
-                R.drawable.wind_speed,"Wind speed", data.current.wind_kph, modifier = Modifier.weight(0.5f),
-                tint = R.color.white)
+                R.drawable.moon_rais,"moonrise", data.forecast.forecastday.get(0).astro.moonrise, modifier = Modifier.weight(0.5f),
+                tint = R.color.limeGreay)
 
             element(
-                R.drawable.wind_direction,"Wind direction", data.current.wind_dir, modifier = Modifier.weight(0.5f),
-                tint = R.color.white)
+                R.drawable.moon_set,"moonset", data.forecast.forecastday.get(0).astro.moonset, modifier = Modifier.weight(0.5f),
+                tint = R.color.lite_greay)
 
         }
 
-    }
-}
-
-@Composable
-fun elementNew(icon: Int, topic: String, data:String, modifier: Modifier,
-            tint: Int) {
-
-    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
-
-        val (iconc, titlec, datac) = createRefs()
-
-        Icon(painter = painterResource(id = icon), contentDescription = null,
-            modifier = Modifier
-                .padding(20.dp)
-                .size(30.dp)
-                .constrainAs(iconc) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    bottom.linkTo(parent.bottom)
-                },
-            tint = colorResource(tint)
-        )
-
-        Text(text = topic,
-            color = colorResource(id = R.color.white),
-            fontSize = 14.sp,
-            fontFamily = FontFamily(Font(R.font.bold)),
-            modifier = Modifier.constrainAs(titlec){
-                start.linkTo(iconc.end)
-                top.linkTo(parent.top, margin = 18.dp)
-            })
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(text = data,
-            color = colorResource(id = R.color.white),
-            fontSize = 14.sp,
-            fontFamily = FontFamily(Font(R.font.bold)),
-            modifier = Modifier.constrainAs(datac){
-                start.linkTo(iconc.end)
-                top.linkTo(titlec.top, margin = 15.dp)
-            }
-        )
     }
 }
