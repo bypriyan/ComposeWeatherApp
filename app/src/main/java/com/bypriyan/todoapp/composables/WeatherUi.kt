@@ -39,7 +39,7 @@ fun weatherUiData(data: ModelCurrentWeatherResponce, headerModifier: Modifier) {
         Header(data, headerModifier)
 
         Spacer(modifier = Modifier.height(20.dp))
-
+        windsCurrentWeather(data)
     }
 }
 
