@@ -23,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,11 +42,16 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.bypriyan.todoapp.R
 import com.bypriyan.todoapp.viewModel.PlaceViewModel
+import com.bypriyan.todoapp.viewModel.WeatherViewModel
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier) {
+fun searchBar(
+    weatherViewModel: WeatherViewModel,
+    placeViewModel: PlaceViewModel,
+    modifier: Modifier
+) {
 
     var query by remember { mutableStateOf("") }
     var isActive by remember { mutableStateOf(false) }
@@ -59,7 +63,13 @@ fun searchBar(placeViewModel: PlaceViewModel, modifier: Modifier) {
             query = it
             placeViewModel.getPlacePredictions(it)
         },
-        onSearch = {},
+        onSearch = {
+            if(query.isNotEmpty()){
+                weatherViewModel.getWeatherData(query)
+                isActive = false
+            }
+
+        },
         active = isActive,
         onActiveChange = {
             isActive = it

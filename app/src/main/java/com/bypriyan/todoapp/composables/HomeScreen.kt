@@ -2,7 +2,6 @@ package com.bypriyan.todoapp.composables
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bypriyan.todoapp.R
@@ -40,19 +38,13 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
 
         selectedPlace?.let{ place ->
             if(!placeName.equals(place)){
+                Log.d("sss", "homeScreen: city = $place")
                 placeName = selectedPlace!!
                 weatherViewModel.getWeatherData(placeName)
             }
         }
 
 
-
-
-        val backgroundImageResId = when {
-            currentTime > 19 || currentTime in 0..5 -> R.drawable.night_bg
-            currentTime in 5..16 -> R.drawable.morning_bg
-            else -> R.drawable.evening_bg
-        }
 
         Box(modifier = Modifier
             .fillMaxSize(),
@@ -62,7 +54,7 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
             if(selectedPlace!=null){
                 Image(
                     painter = painterResource(
-                        id = backgroundImageResId
+                        id = R.drawable.night_bg
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
@@ -77,32 +69,30 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
                 lottieAnimation(R.raw.weather_city)
             }
 
-
-
-            when(val result = currentWeatherStatus.value){
-                is NetworkResponce.Loading -> {
-                    progressBar()
-                }
-
-                is NetworkResponce.Error -> {
-                    Log.d("tagla", "homeScreen: error")
-
-                }
-
-                is NetworkResponce.Success -> {
-                    Log.d("sss", "homeScreen: ok ${result.data} ")
-                }
-                else -> {
-                }
-
-            }
-
             Column(
                 modifier = Modifier.fillMaxSize(),
                 ) {
-                searchBar(placeViewModel, modifier = Modifier.fillMaxWidth())
+                searchBar(weatherViewModel,placeViewModel, modifier = Modifier.fillMaxWidth())
 
+                when(val result = currentWeatherStatus.value){
+                    is NetworkResponce.Loading -> {
+                        progressBar()
+                    }
+
+                    is NetworkResponce.Error -> {
+                        Log.d("tagla", "homeScreen: error")
+                        
+
+                    }
+                    is NetworkResponce.Success -> {
+                        weatherUiData(result.data, Modifier.fillMaxWidth())
+                    }
+                    else -> {
+                    }
+
+                }              
             }
 
         }
     }
+
