@@ -1,6 +1,6 @@
 package com.bypriyan.todoapp.composables
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -22,17 +24,31 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
+import com.bypriyan.todoapp.Model.forcaste.ModelWeatherForcase
 import com.bypriyan.todoapp.R
+import com.bypriyan.todoapp.networkResp.NetworkResponce
+import com.bypriyan.todoapp.viewModel.WeatherViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@Composable
-fun weatherUiData(data: ModelCurrentWeatherResponce, headerModifier: Modifier) {
 
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+
+@Composable
+fun weatherUiData(
+    data: ModelCurrentWeatherResponce,
+    headerModifier: Modifier,
+    weatherViewModel: WeatherViewModel
+) {
+
+    val weatherForcasteStatus = weatherViewModel.forcasteWeatherstatus.observeAsState()
+    var resultData: ModelWeatherForcase? = null
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         ) {
         Spacer(modifier = Modifier.height(20.dp))
@@ -40,6 +56,52 @@ fun weatherUiData(data: ModelCurrentWeatherResponce, headerModifier: Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
         windsCurrentWeather(data)
+
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = "Hourly",
+            color = colorResource(id = R.color.white),
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.bold)),
+            textAlign = TextAlign.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+
+
+        when(val result = weatherForcasteStatus.value){
+            is NetworkResponce.Loading -> {
+                progressBar()
+            }
+
+            is NetworkResponce.Error -> {
+                Log.d("tagla", "homeScreen: error")
+
+            }
+            is NetworkResponce.Success -> {
+                resultData = result.data
+                hourlyWeatherForcast(result.data)
+            }
+            else -> {
+            }
+
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = "Details",
+            color = colorResource(id = R.color.white),
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.bold)),
+            textAlign = TextAlign.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp))
+
+        Spacer(modifier = Modifier.height(10.dp))
+        forcasteWeatherDataSunMoon(resultData!!)
+
     }
 }
 

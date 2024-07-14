@@ -1,6 +1,7 @@
 package com.bypriyan.togocartstore.api
 
 import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
+import com.bypriyan.todoapp.Model.forcaste.ModelWeatherForcase
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -20,5 +21,11 @@ interface ApiService {
         @Query("key") apiKey: String,
         @Query("q") city:String
     ): Response<ModelCurrentWeatherResponce>
+
+    @GET("/v1/forecast.json")
+    suspend fun getForcasteWeatherReport(
+        @Query("key") apiKey: String,
+        @Query("q") city:String
+    ): Response<ModelWeatherForcase>
 
 }

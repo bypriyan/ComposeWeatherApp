@@ -15,21 +15,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.bypriyan.todoapp.Model.ModelCurrentWeatherResponce
+import com.bypriyan.todoapp.Model.forcaste.ModelWeatherForcase
 import com.bypriyan.todoapp.R
 
-
 @Composable
-fun windsCurrentWeather(data: ModelCurrentWeatherResponce) {
+fun forcasteWeatherDataSunMoon(data: ModelWeatherForcase) {
 
     Column {
 
@@ -43,10 +41,12 @@ fun windsCurrentWeather(data: ModelCurrentWeatherResponce) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center){
 
-            element(R.drawable.humidity,"Humidity", data.current.humidity, modifier = Modifier.weight(0.5f),
+            element(
+                R.drawable.humidity,"Humidity", data.current.humidity, modifier = Modifier.weight(0.5f),
                 tint = R.color.white)
 
-            element(R.drawable.uv,"UV index", data.current.uv, modifier = Modifier.weight(0.5f),
+            element(
+                R.drawable.uv,"UV index", data.current.uv, modifier = Modifier.weight(0.5f),
                 tint = R.color.yellow)
 
         }
@@ -63,10 +63,12 @@ fun windsCurrentWeather(data: ModelCurrentWeatherResponce) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center){
 
-            element(R.drawable.wind_speed,"Wind speed", data.current.wind_kph, modifier = Modifier.weight(0.5f),
+            element(
+                R.drawable.wind_speed,"Wind speed", data.current.wind_kph, modifier = Modifier.weight(0.5f),
                 tint = R.color.white)
 
-            element(R.drawable.wind_direction,"Wind direction", data.current.wind_dir, modifier = Modifier.weight(0.5f),
+            element(
+                R.drawable.wind_direction,"Wind direction", data.current.wind_dir, modifier = Modifier.weight(0.5f),
                 tint = R.color.white)
 
         }
@@ -75,7 +77,7 @@ fun windsCurrentWeather(data: ModelCurrentWeatherResponce) {
 }
 
 @Composable
-fun element(icon: Int, topic: String, data:String, modifier: Modifier,
+fun elementNew(icon: Int, topic: String, data:String, modifier: Modifier,
             tint: Int) {
 
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
@@ -91,7 +93,8 @@ fun element(icon: Int, topic: String, data:String, modifier: Modifier,
                     start.linkTo(parent.start)
                     bottom.linkTo(parent.bottom)
                 },
-            tint = colorResource(tint))
+            tint = colorResource(tint)
+        )
 
         Text(text = topic,
             color = colorResource(id = R.color.white),

@@ -41,10 +41,9 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
                 Log.d("sss", "homeScreen: city = $place")
                 placeName = selectedPlace!!
                 weatherViewModel.getWeatherData(placeName)
+                weatherViewModel.getForcasteWeatherData(placeName)
             }
         }
-
-
 
         Box(modifier = Modifier
             .fillMaxSize(),
@@ -85,7 +84,7 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
 
                     }
                     is NetworkResponce.Success -> {
-                        weatherUiData(result.data, Modifier.fillMaxWidth())
+                        weatherUiData(result.data, Modifier.fillMaxWidth(), weatherViewModel)
                     }
                     else -> {
                     }
