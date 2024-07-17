@@ -19,7 +19,7 @@ object PlacesModule {
     @Singleton
     fun providePlacesClient(@ApplicationContext context: Context): PlacesClient {
         if (!Places.isInitialized()) {
-            Places.initialize(context, "xxxxxxxxxxxxxxxxxxxxxxxxx")
+            Places.initialize(context, "xxxxxxxxxxxxxxxx")
         }
         return Places.createClient(context)
     }
