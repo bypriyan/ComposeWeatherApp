@@ -1,5 +1,7 @@
 package com.bypriyan.todoapp.composables
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -13,7 +15,7 @@ import com.bypriyan.todoapp.R
 @Composable
 fun progressBar(){
     CircularProgressIndicator(
-        modifier = Modifier.size(34.dp), // Use size instead of width
+        modifier = Modifier.size(34.dp).fillMaxWidth(), // Use size instead of width
         color = colorResource(id = R.color.teal_200),
         trackColor = colorResource(id = R.color.transparent),
     )

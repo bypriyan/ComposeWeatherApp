@@ -2,6 +2,7 @@ package com.bypriyan.todoapp.composables
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -75,7 +76,12 @@ import com.bypriyan.todoapp.viewModel.WeatherViewModel
 
                 when(val result = currentWeatherStatus.value){
                     is NetworkResponce.Loading -> {
-                        progressBar()
+                        Column (modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center){
+                            progressBar()
+                        }
+
                     }
 
                     is NetworkResponce.Error -> {

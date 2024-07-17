@@ -63,13 +63,7 @@ fun searchBar(
             query = it
             placeViewModel.getPlacePredictions(it)
         },
-        onSearch = {
-            if(query.isNotEmpty()){
-                weatherViewModel.getWeatherData(query)
-                isActive = false
-            }
-
-        },
+        onSearch = {},
         active = isActive,
         onActiveChange = {
             isActive = it
